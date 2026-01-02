@@ -4,6 +4,8 @@
 
 :root {
   color-scheme: dark;
+  --admin-sidebar-width: 248px;
+  --admin-topbar-height: 56px;
 }
 
 * {
@@ -19,4 +21,201 @@ body {
 
 a {
   color: var(--color-accent-cyan);
+}
+
+.admin-page {
+  display: grid;
+  gap: var(--space-24);
+}
+
+.content-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.content-header__main {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.content-header__eyebrow {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.content-header__title {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.content-header__subtitle {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.card {
+  background: var(--color-surface-base);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: none;
+}
+
+.card--padded {
+  padding: var(--space-24);
+}
+
+.table-card {
+  overflow: hidden;
+}
+
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding: var(--space-16) var(--space-24);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.table-toolbar__meta {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.table-toolbar__title {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.table-toolbar__subtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.table-toolbar__actions,
+.table-filters {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.table-filters {
+  padding: var(--space-12) var(--space-24);
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: rgba(20, 28, 37, 0.6);
+}
+
+.table-filters .el-input__wrapper,
+.table-filters .el-select__wrapper {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: none;
+}
+
+.table-filters .el-input,
+.table-filters .el-select {
+  min-width: 180px;
+}
+
+.table-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.data-table {
+  width: 100%;
+}
+
+.data-table .el-table__header-wrapper th {
+  background: var(--color-surface-panel);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.data-table .el-table__cell {
+  padding: var(--space-12) var(--space-16);
+}
+
+.data-table .el-table__body td {
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.data-table .el-table__row:hover td {
+  background: rgba(61, 214, 255, 0.04);
+}
+
+.admin-form .el-form-item__label {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-form .el-input__wrapper,
+.admin-form .el-select__wrapper {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: none;
+}
+
+.admin-form .el-input__inner {
+  color: var(--color-text-primary);
+}
+
+.btn-primary.el-button {
+  height: 36px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+.btn-secondary.el-button {
+  height: 36px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-primary);
+}
+
+.btn-secondary.el-button:hover {
+  border-color: var(--color-border-strong);
+}
+
+.btn-link.el-button {
+  padding: 0;
+  height: auto;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.btn-link.el-button:hover {
+  color: var(--color-text-primary);
+}
+
+.otp-dialog .el-dialog {
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.otp-dialog .el-dialog__header {
+  padding: var(--space-16) var(--space-24);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.otp-dialog .el-dialog__body {
+  padding: var(--space-24);
 }

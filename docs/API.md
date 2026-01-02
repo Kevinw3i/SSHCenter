@@ -1,5 +1,11 @@
 # API Contract (v1)
 
+Base URL (local dev): http://localhost:3001/api/v1
+
+Notes:
+- Admin UI user list/create/edit uses the Users endpoints below.
+- OTP QR modal uses GET /api/v1/users/:id/otp_qr.
+
 ## Auth
 ### POST /api/v1/auth/login
 Request:

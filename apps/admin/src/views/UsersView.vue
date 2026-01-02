@@ -1,154 +1,130 @@
 <template>
-  <section class="panel">
-    <div class="panel__header">
-      <div>
-        <h2>{{ $t("users.title") }}</h2>
-        <p>Manage accounts, roles, and OTP.</p>
+  <section class="admin-page">
+    <ContentHeader :title="$t('users.title')" :subtitle="$t('users.subtitle')">
+      <template #actions>
+        <el-button type="primary" class="btn-primary" @click="goCreate">{{ $t("users.create") }}</el-button>
+      </template>
+    </ContentHeader>
+
+    <div class="card table-card">
+      <div class="table-toolbar">
+        <div class="table-toolbar__meta">
+          <span class="table-toolbar__title">{{ $t("users.listTitle") }}</span>
+          <span class="table-toolbar__subtitle">
+            {{ $t("users.countLabel", { count: users.length }) }}
+          </span>
+        </div>
       </div>
-      <el-button type="primary" @click="openCreate">{{ $t("users.create") }}</el-button>
+      <el-table :data="users" row-key="id" class="data-table">
+        <el-table-column prop="id" label="ID" width="80" align="center" header-align="center" />
+        <el-table-column prop="username" :label="$t('app.username')" min-width="180" />
+        <el-table-column prop="role" :label="$t('users.role')" width="140">
+          <template #default="scope">
+            <el-tag size="small" effect="plain" :type="roleTagType(scope.row.role)">
+              {{ scope.row.role }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="open_mode" :label="$t('users.openMode')" width="160">
+          <template #default="scope">
+            <el-tag size="small" effect="plain" type="info">
+              {{ scope.row.open_mode }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('users.actions')" width="200" align="right" header-align="right">
+          <template #default="scope">
+            <div class="table-actions">
+              <el-button text size="small" class="btn-link" @click="goEdit(scope.row)">
+                {{ $t("users.edit") }}
+              </el-button>
+              <el-button text size="small" class="btn-link" @click="openOtp(scope.row)">
+                {{ $t("users.otpQr") }}
+              </el-button>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
 
-    <el-table :data="users" style="width: 100%">
-      <el-table-column prop="id" label="ID" width="80" />
-      <el-table-column prop="username" :label="$t('app.username')" />
-      <el-table-column prop="role" :label="$t('users.role')" width="120" />
-      <el-table-column prop="open_mode" :label="$t('users.openMode')" width="140" />
-      <el-table-column label="Actions" width="220">
-        <template #default="scope">
-          <el-button size="small" @click="openEdit(scope.row)">{{ $t("users.edit") }}</el-button>
-          <el-button size="small" plain @click="openOtp(scope.row)">{{ $t("users.otpQr") }}</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <el-dialog v-model="dialogVisible" :title="dialogTitle" width="420px">
-      <el-form :model="form" label-position="top">
-        <el-form-item :label="$t('app.username')">
-          <el-input v-model="form.username" />
-        </el-form-item>
-        <el-form-item :label="$t('app.password')" v-if="isCreate">
-          <el-input v-model="form.password" type="password" />
-        </el-form-item>
-        <el-form-item :label="$t('users.role')">
-          <el-select v-model="form.role">
-            <el-option label="admin" value="admin" />
-            <el-option label="manage" value="manage" />
-            <el-option label="user" value="user" />
-          </el-select>
-        </el-form-item>
-        <el-form-item :label="$t('users.openMode')">
-          <el-select v-model="form.open_mode">
-            <el-option label="terminal" value="terminal" />
-            <el-option label="web" value="web" />
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <el-button @click="dialogVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="save">Save</el-button>
-      </template>
-    </el-dialog>
-
-    <el-dialog v-model="otpVisible" title="OTP QR" width="360px">
-      <div class="otp-box" v-html="otpSvg" />
+    <el-dialog v-model="otpVisible" class="otp-dialog" :title="$t('users.otpTitle')" width="360px">
+      <div class="otp-modal">
+        <p class="otp-modal__hint">{{ $t("users.otpSubtitle") }}</p>
+        <div class="otp-box" v-html="otpSvg" />
+      </div>
     </el-dialog>
   </section>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import api from "@/lib/api";
+import ContentHeader from "@/components/ContentHeader.vue";
 
+const router = useRouter();
+const { t } = useI18n();
 const users = ref([]);
-const dialogVisible = ref(false);
 const otpVisible = ref(false);
 const otpSvg = ref("");
-const isCreate = ref(true);
-const dialogTitle = ref("");
-const form = reactive({
-  id: null,
-  username: "",
-  password: "",
-  role: "user",
-  open_mode: "terminal"
-});
 
 const loadUsers = async () => {
   const response = await api.get("/users");
   users.value = response.data.users;
 };
 
-const openCreate = () => {
-  isCreate.value = true;
-  dialogTitle.value = "Create User";
-  Object.assign(form, { id: null, username: "", password: "", role: "user", open_mode: "terminal" });
-  dialogVisible.value = true;
+const goCreate = () => {
+  router.push("/users/new");
 };
 
-const openEdit = (user) => {
-  isCreate.value = false;
-  dialogTitle.value = "Edit User";
-  Object.assign(form, { id: user.id, username: user.username, password: "", role: user.role, open_mode: user.open_mode });
-  dialogVisible.value = true;
+const goEdit = (user) => {
+  router.push(`/users/${user.id}/edit`);
 };
 
-const save = async () => {
-  const payload = { ...form };
-  if (!payload.password) delete payload.password;
-  try {
-    if (isCreate.value) {
-      await api.post("/users", { user: payload });
-    } else {
-      await api.patch(`/users/${form.id}`, { user: payload });
-    }
-    dialogVisible.value = false;
-    await loadUsers();
-    ElMessage.success("Saved");
-  } catch (error) {
-    ElMessage.error("Save failed");
-  }
+const roleTagType = (role) => {
+  if (role === "admin") return "danger";
+  if (role === "manage") return "warning";
+  return "info";
 };
 
 const openOtp = async (user) => {
-  const response = await api.get(`/users/${user.id}/otp_qr`);
-  otpSvg.value = response.data.qr_svg;
-  otpVisible.value = true;
+  try {
+    const response = await api.get(`/users/${user.id}/otp_qr`);
+    otpSvg.value = response.data.qr_svg;
+    otpVisible.value = true;
+  } catch (error) {
+    ElMessage.error(t("common.loadFailed"));
+  }
 };
 
-onMounted(loadUsers);
+onMounted(async () => {
+  try {
+    await loadUsers();
+  } catch (error) {
+    ElMessage.error(t("common.loadFailed"));
+  }
+});
 </script>
 
 <style scoped>
-.panel {
-  background: rgba(20, 28, 37, 0.8);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 24px;
-  box-shadow: var(--shadow-sm);
+.otp-modal {
+  display: grid;
+  gap: var(--space-12);
 }
 
-.panel__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.panel__header h2 {
-  margin: 0 0 6px;
-  font-size: 20px;
-}
-
-.panel__header p {
+.otp-modal__hint {
   margin: 0;
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
 }
 
 .otp-box {
   display: grid;
   place-items: center;
-  padding: 16px;
+  padding: var(--space-16);
   background: #fff;
+  border-radius: var(--radius-md);
 }
 </style>

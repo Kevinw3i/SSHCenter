@@ -10,10 +10,13 @@
 1. Create a new user with role user -> appears in list.
 2. Edit user role -> policy applied.
 3. View OTP QR code -> visible and scannable.
+4. Click "Create User" -> navigates to create page and save returns to list.
+5. Click "Edit" on a row -> navigates to edit page and save returns to list.
 
 ## Admin - Servers
 1. Create server with site/env/role/ip -> appears in list.
 2. Create group and attach server -> server shows group.
+3. Edit server -> updates list with new values.
 
 ## Admin - Permissions
 1. Assign group to user -> user can see group servers.
@@ -28,3 +31,6 @@
 1. Refresh list -> data updates.
 2. Multi-open -> select multiple servers and open.
 3. Web open mode -> terminal view opens and can return to list.
+
+## Development Notes
+- Local API base URL: http://localhost:3001/api/v1

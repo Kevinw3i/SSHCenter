@@ -28,13 +28,11 @@ const auth = useAuthStore();
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: radial-gradient(circle at top right, rgba(61, 214, 255, 0.08), transparent 50%),
-    radial-gradient(circle at 20% 20%, rgba(124, 255, 107, 0.08), transparent 45%),
-    var(--color-ink-900);
+  background: var(--color-ink-900);
 }
 
 .app-content {
   flex: 1;
-  padding: 28px;
+  padding: var(--space-24) var(--space-32) var(--space-32);
 }
 </style>

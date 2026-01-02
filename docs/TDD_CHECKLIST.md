@@ -25,3 +25,9 @@
 ## Permissions
 - [ ] Admin can assign group to user
 - [ ] User sees group-bound servers after assignment
+
+## Development Notes
+- Local API base URL: http://localhost:3001/api/v1
+
+## UI Notes
+- Admin user create/edit page continues to use POST/PATCH /api/v1/users.

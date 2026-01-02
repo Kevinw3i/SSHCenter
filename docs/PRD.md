@@ -5,6 +5,7 @@ SSCenter is a web-based SSH access hub with a user-facing console-style UI and a
 
 ## Development
 - Frontend package manager: pnpm.
+- Local API base URL: http://localhost:3001.
 
 ## Goals
 - Provide a secure login flow with OTP for both admin and frontend users.
@@ -26,7 +27,8 @@ SSCenter is a web-based SSH access hub with a user-facing console-style UI and a
 
 ### Admin UI (apps/admin)
 - Login with username/password/OTP.
-- User management: list, create, edit, OTP QR display.
+- Enterprise layout: sidebar + topbar + content header.
+- User management: list page + create/edit page, OTP QR modal.
 - Server management: create/edit servers, group servers under a named group.
 - Permission management: assign groups to users.
 

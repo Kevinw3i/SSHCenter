@@ -1,17 +1,26 @@
 <template>
   <header class="topbar">
-    <div class="topbar__meta">
-      <span class="topbar__label">{{ $t("app.title") }}</span>
-      <span class="topbar__divider">/</span>
-      <span class="topbar__hint">OPS Console</span>
+    <div class="topbar__left">
+      <span class="topbar__title">{{ $t("app.title") }}</span>
+      <span class="topbar__divider"></span>
+      <span class="topbar__context">{{ $t("app.opsConsole") }}</span>
     </div>
-    <div class="topbar__actions">
-      <el-select v-model="locale" size="small" class="lang-select">
-        <el-option label="繁體中文" value="zh-TW" />
-        <el-option label="简体中文" value="zh-CN" />
-        <el-option label="English" value="en" />
-      </el-select>
-      <el-button type="primary" plain size="small" @click="logout">
+    <div class="topbar__right">
+      <span v-if="auth.user?.username" class="topbar__user">{{ auth.user.username }}</span>
+      <el-dropdown trigger="click" @command="setLocale">
+        <el-button size="small" text class="topbar__lang">
+          {{ localeLabel }}
+          <span class="topbar__chevron">▾</span>
+        </el-button>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="zh-TW">繁體中文</el-dropdown-item>
+            <el-dropdown-item command="zh-CN">简体中文</el-dropdown-item>
+            <el-dropdown-item command="en">English</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+      <el-button size="small" class="topbar__logout" @click="logout">
         {{ $t("app.logout") }}
       </el-button>
     </div>
@@ -19,6 +28,7 @@
 </template>
 
 <script setup>
+import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
@@ -27,10 +37,29 @@ const auth = useAuthStore();
 const router = useRouter();
 const { locale } = useI18n();
 
+const localeLabel = computed(() => {
+  const labels = {
+    "zh-TW": "繁體中文",
+    "zh-CN": "简体中文",
+    en: "English"
+  };
+  return labels[locale.value] || "English";
+});
+
+const setLocale = (value) => {
+  locale.value = value;
+};
+
 const logout = async () => {
   await auth.logout();
   router.push("/login");
 };
+
+onMounted(() => {
+  if (auth.isAuthenticated && !auth.user) {
+    auth.fetchMe();
+  }
+});
 </script>
 
 <style scoped>
@@ -38,38 +67,61 @@ const logout = async () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 28px;
+  height: var(--admin-topbar-height);
+  padding: 0 var(--space-24);
   border-bottom: 1px solid var(--color-border-subtle);
-  background: rgba(20, 28, 37, 0.72);
-  backdrop-filter: blur(12px);
+  background: var(--color-surface-base);
 }
 
-.topbar__meta {
+.topbar__left {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-muted);
+  gap: var(--space-12);
 }
 
-.topbar__label {
+.topbar__title {
   color: var(--color-text-primary);
   font-weight: 600;
+  font-size: var(--font-size-md);
 }
 
 .topbar__divider {
-  opacity: 0.4;
+  width: 1px;
+  height: 14px;
+  background: var(--color-border-subtle);
 }
 
-.topbar__actions {
+.topbar__context {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.topbar__right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-12);
 }
 
-.lang-select {
-  width: 140px;
+.topbar__user {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.topbar__lang {
+  color: var(--color-text-secondary);
+}
+
+.topbar__chevron {
+  margin-left: 6px;
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+.topbar__logout {
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-subtle);
 }
 </style>
