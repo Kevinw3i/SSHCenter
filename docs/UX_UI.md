@@ -32,6 +32,7 @@ Source of truth: packages/ui/tokens.json
 ### Server List
 - Table-like list with monospace alignment: Site / Env / Role / IP.
 - Actions: refresh, multi-open toggle, enter server.
+- Terminal command format uses role@IP.
 - Web open mode: in-page terminal simulation with a clear "Back to list" control.
 
 ## Admin (apps/admin) Layout

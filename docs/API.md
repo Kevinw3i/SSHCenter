@@ -67,6 +67,7 @@ Response:
 ## Servers
 ### GET /api/v1/servers
 - Returns servers visible to current user via group memberships.
+- Client formats connect command as role@ip using `role` and `ip`.
 
 ### GET /api/v1/admin/servers
 - Admin/manager only.

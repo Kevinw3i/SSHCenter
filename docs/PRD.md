@@ -38,6 +38,7 @@ SSCenter is a web-based SSH access hub with a user-facing console-style UI and a
 - Persistent header showing user, current time (1s update), and current IP.
 - User settings: update password, SSH public key, and open mode (Terminal or Web).
 - Server list: view servers by site/env/role, refresh list, select server(s).
+- Connection command format: role@IP.
 - Web mode: embedded terminal-like session with a return control.
 
 ## Non-goals (initial release)

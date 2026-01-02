@@ -8,7 +8,7 @@
       <button class="ghost" @click="$emit('close')">{{ $t("servers.back") }}</button>
     </div>
     <div class="session__body">
-      <p class="line">Connecting to {{ server.ip }}...</p>
+      <p class="line">Connecting to {{ server.role }}@{{ server.ip }}...</p>
       <p class="line">Welcome to {{ server.site }} ({{ server.env }})</p>
       <p class="line">Last login: {{ new Date().toISOString() }}</p>
       <p class="cursor">$</p>

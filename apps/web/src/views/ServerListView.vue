@@ -96,9 +96,10 @@ const openServer = (server) => {
     return;
   }
 
-  const command = `ssh ${auth.user?.username || "user"}@${server.ip}`;
+  const role = server.role || auth.user?.username || "user";
+  const command = `ssh ${role}@${server.ip}`;
   terminalCommands.value = [command, ...terminalCommands.value].slice(0, 5);
-  window.open(`ssh://${server.ip}`, "_blank");
+  window.open(`ssh://${role}@${server.ip}`, "_blank");
 };
 
 const openSelected = () => {

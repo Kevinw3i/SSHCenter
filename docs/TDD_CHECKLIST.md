@@ -31,3 +31,4 @@
 
 ## UI Notes
 - Admin user create/edit page continues to use POST/PATCH /api/v1/users.
+- Web server connect command uses role@IP.

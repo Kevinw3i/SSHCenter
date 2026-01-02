@@ -31,6 +31,7 @@
 1. Refresh list -> data updates.
 2. Multi-open -> select multiple servers and open.
 3. Web open mode -> terminal view opens and can return to list.
+4. Terminal command uses role@IP format.
 
 ## Development Notes
 - Local API base URL: http://localhost:3001/api/v1

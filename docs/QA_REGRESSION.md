@@ -6,6 +6,7 @@
 - Admin can edit servers from the list.
 - Admin layout uses compact topbar and aligned table actions.
 - User server list remains filtered by group membership.
+- Web server connect command shows role@IP.
 - i18n switches language without layout breakage.
 - Web terminal view returns safely to list.
 
