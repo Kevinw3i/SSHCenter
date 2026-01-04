@@ -11,6 +11,9 @@
       <RouterLink to="/servers" class="nav__link">
         <span class="nav__label">{{ $t("nav.servers") }}</span>
       </RouterLink>
+      <RouterLink to="/groups" class="nav__link">
+        <span class="nav__label">{{ $t("nav.groups") }}</span>
+      </RouterLink>
       <RouterLink to="/permissions" class="nav__link">
         <span class="nav__label">{{ $t("nav.permissions") }}</span>
       </RouterLink>

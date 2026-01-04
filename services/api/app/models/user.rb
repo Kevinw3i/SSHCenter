@@ -39,6 +39,10 @@ class User < ApplicationRecord
     false
   end
 
+  def jwt_payload
+    { "exp" => (Time.current + jwt_expiration_duration).to_i }
+  end
+
   private
 
   def normalize_username
@@ -51,5 +55,11 @@ class User < ApplicationRecord
 
   def totp
     @totp ||= ROTP::TOTP.new(otp_secret, issuer: "SSCenter")
+  end
+
+  def jwt_expiration_duration
+    return 12.hours if role_admin? || role_manage?
+
+    1.hour
   end
 end

@@ -39,10 +39,13 @@
 
 <script setup>
 import { onMounted, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/auth";
 import api from "@/lib/api";
+import { confirmAction } from "@/lib/confirm";
 
 const auth = useAuthStore();
+const { t } = useI18n();
 const sshPublicKey = ref("");
 const openMode = ref("terminal");
 const passwordForm = reactive({
@@ -56,17 +59,20 @@ const hydrate = () => {
 };
 
 const updatePassword = async () => {
+  if (!confirmAction(t("common.confirmMutation"))) return;
   await api.patch("/users/me/password", passwordForm);
   passwordForm.current_password = "";
   passwordForm.new_password = "";
 };
 
 const updateSshKey = async () => {
+  if (!confirmAction(t("common.confirmMutation"))) return;
   const response = await api.patch("/users/me/ssh_key", { ssh_public_key: sshPublicKey.value });
   auth.user = response.data.user;
 };
 
 const updateOpenMode = async () => {
+  if (!confirmAction(t("common.confirmMutation"))) return;
   const response = await api.patch("/users/me", { user: { open_mode: openMode.value } });
   auth.user = response.data.user;
 };

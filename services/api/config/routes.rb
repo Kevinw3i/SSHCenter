@@ -20,7 +20,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :create, :update]
 
       resources :server_groups
-      resources :servers, only: [:index, :create, :update]
+      resources :servers, only: [:index, :create, :update, :destroy]
       get "admin/servers", to: "servers#admin_index"
 
       resources :group_memberships, only: [:index, :create, :destroy]

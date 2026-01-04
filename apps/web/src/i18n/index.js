@@ -16,6 +16,10 @@ const messages = {
       userInfo: "User Info",
       servers: "Servers"
     },
+    common: {
+      confirmMutation: "This action will update data. Continue?",
+      confirmLogout: "Log out and revoke the current session?"
+    },
     status: {
       user: "User",
       time: "Time",
@@ -60,6 +64,10 @@ const messages = {
     nav: {
       userInfo: "使用者資訊",
       servers: "伺服器列表"
+    },
+    common: {
+      confirmMutation: "此操作將更新資料，是否繼續？",
+      confirmLogout: "是否登出並撤銷目前登入？"
     },
     status: {
       user: "使用者",
@@ -106,6 +114,10 @@ const messages = {
       userInfo: "用户信息",
       servers: "服务器列表"
     },
+    common: {
+      confirmMutation: "此操作将更新数据，是否继续？",
+      confirmLogout: "是否退出并撤销当前登录？"
+    },
     status: {
       user: "用户",
       time: "时间",
@@ -138,9 +150,14 @@ const messages = {
   }
 };
 
+const getInitialLocale = () => {
+  if (typeof window === "undefined") return "zh-TW";
+  return localStorage.getItem("sscenter_locale") || "zh-TW";
+};
+
 const i18n = createI18n({
   legacy: false,
-  locale: "zh-TW",
+  locale: getInitialLocale(),
   fallbackLocale: "en",
   messages
 });

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_30_095922) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_03_030000) do
   create_table "group_memberships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "server_group_id", null: false
@@ -41,7 +41,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_30_095922) do
     t.string "env", null: false
     t.string "ip", null: false
     t.string "role", null: false
-    t.bigint "server_group_id", null: false
+    t.bigint "server_group_id"
     t.string "site", null: false
     t.datetime "updated_at", null: false
     t.index ["server_group_id"], name: "index_servers_on_server_group_id"

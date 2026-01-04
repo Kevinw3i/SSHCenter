@@ -8,25 +8,25 @@
 
     <div class="card card--padded form-card">
       <div class="form-grid">
-        <el-form :model="form" label-position="top" class="admin-form" :disabled="loading">
-          <el-form-item :label="$t('app.username')">
+        <el-form
+          ref="formRef"
+          :model="form"
+          :rules="rules"
+          label-position="top"
+          class="admin-form"
+          :disabled="loading"
+        >
+          <el-form-item :label="$t('app.username')" prop="username">
             <el-input v-model="form.username" autocomplete="username" />
           </el-form-item>
-          <el-form-item v-if="isCreate" :label="$t('app.password')">
+          <el-form-item v-if="isCreate" :label="$t('app.password')" prop="password">
             <el-input v-model="form.password" type="password" autocomplete="new-password" />
           </el-form-item>
-          <el-form-item :label="$t('users.role')">
-            <el-select v-model="form.role">
-              <el-option label="admin" value="admin" />
-              <el-option label="manage" value="manage" />
-              <el-option label="user" value="user" />
-            </el-select>
+          <el-form-item :label="$t('users.role')" prop="role">
+            <AdminSelect v-model="form.role" :options="roleOptions" />
           </el-form-item>
-          <el-form-item :label="$t('users.openMode')">
-            <el-select v-model="form.open_mode">
-              <el-option label="terminal" value="terminal" />
-              <el-option label="web" value="web" />
-            </el-select>
+          <el-form-item :label="$t('users.openMode')" prop="open_mode">
+            <AdminSelect v-model="form.open_mode" :options="openModeOptions" />
           </el-form-item>
         </el-form>
 
@@ -52,17 +52,20 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, ref, watch } from "vue";
+import { computed, nextTick, onMounted, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import api from "@/lib/api";
 import ContentHeader from "@/components/ContentHeader.vue";
+import AdminSelect from "@/components/AdminSelect.vue";
+import { confirmAction } from "@/lib/confirm";
 
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
 const loading = ref(false);
+const formRef = ref(null);
 
 const form = reactive({
   id: null,
@@ -72,8 +75,27 @@ const form = reactive({
   open_mode: "terminal"
 });
 
+const roleOptions = [
+  { label: "admin", value: "admin" },
+  { label: "manage", value: "manage" },
+  { label: "user", value: "user" }
+];
+
+const openModeOptions = [
+  { label: "terminal", value: "terminal" },
+  { label: "web", value: "web" }
+];
+
 const isCreate = computed(() => route.name === "user-create");
 const pageTitle = computed(() => (isCreate.value ? t("users.createTitle") : t("users.editTitle")));
+const rules = computed(() => ({
+  username: [{ required: true, message: t("validation.required"), trigger: "blur" }],
+  password: isCreate.value
+    ? [{ required: true, message: t("validation.passwordRequired"), trigger: "blur" }]
+    : [],
+  role: [{ required: true, message: t("validation.required"), trigger: "change" }],
+  open_mode: [{ required: true, message: t("validation.required"), trigger: "change" }]
+}));
 
 const resetForm = () => {
   Object.assign(form, { id: null, username: "", password: "", role: "user", open_mode: "terminal" });
@@ -82,6 +104,7 @@ const resetForm = () => {
 const loadUser = async () => {
   if (isCreate.value) {
     resetForm();
+    nextTick(() => formRef.value?.clearValidate());
     return;
   }
 
@@ -95,6 +118,7 @@ const loadUser = async () => {
       return;
     }
     Object.assign(form, { id: user.id, username: user.username, password: "", role: user.role, open_mode: user.open_mode });
+    nextTick(() => formRef.value?.clearValidate());
   } catch (error) {
     ElMessage.error(t("common.loadFailed"));
   } finally {
@@ -103,6 +127,10 @@ const loadUser = async () => {
 };
 
 const save = async () => {
+  const valid = await formRef.value?.validate().catch(() => false);
+  if (!valid) return;
+  const confirmed = await confirmAction(t("common.confirmMutation"));
+  if (!confirmed) return;
   loading.value = true;
   try {
     const payload = {

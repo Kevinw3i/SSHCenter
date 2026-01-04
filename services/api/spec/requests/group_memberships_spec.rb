@@ -17,6 +17,19 @@ RSpec.describe "GroupMemberships", type: :request do
       expect(response).to have_http_status(:created)
       expect(JSON.parse(response.body).dig("group_membership", "user", "id")).to eq(user.id)
     end
+
+    it "rejects duplicate assignments" do
+      user = User.create!(username: "user1", password: "password123", role: :user)
+      group = ServerGroup.create!(name: "Group A")
+      GroupMembership.create!(user: user, server_group: group)
+
+      post "/api/v1/group_memberships",
+        headers: auth_headers(admin),
+        params: { group_membership: { user_id: user.id, server_group_id: group.id } }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(JSON.parse(response.body)["error"]).to be_present
+    end
   end
 
   describe "GET /api/v1/group_memberships" do
@@ -29,6 +42,19 @@ RSpec.describe "GroupMemberships", type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body)["group_memberships"].size).to be >= 1
+    end
+  end
+
+  describe "DELETE /api/v1/group_memberships/:id" do
+    it "removes a membership" do
+      user = User.create!(username: "user1", password: "password123", role: :user)
+      group = ServerGroup.create!(name: "Group A")
+      membership = GroupMembership.create!(user: user, server_group: group)
+
+      delete "/api/v1/group_memberships/#{membership.id}", headers: auth_headers(admin)
+
+      expect(response).to have_http_status(:no_content)
+      expect(GroupMembership.exists?(membership.id)).to be(false)
     end
   end
 end

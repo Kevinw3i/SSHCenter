@@ -57,4 +57,12 @@
   --motion-normal: 240ms;
   --motion-slow: 420ms;
   --motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --control-height-sm: 28px;
+  --control-height-md: 36px;
+  --control-height-lg: 40px;
+  --control-padding-x: 12px;
+  --control-padding-y: 6px;
+  --control-padding-x-sm: 10px;
+  --control-padding-y-sm: 4px;
 }

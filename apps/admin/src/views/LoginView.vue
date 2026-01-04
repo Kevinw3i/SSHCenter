@@ -29,7 +29,7 @@
             <h1>{{ $t("app.login") }}</h1>
             <p>{{ $t("app.loginHelper") }}</p>
           </div>
-          <el-form :model="form" label-position="top" class="login-form">
+          <el-form :model="form" label-position="top" class="login-form admin-form">
             <el-form-item :label="$t('app.username')">
               <el-input v-model="form.username" autocomplete="username" />
             </el-form-item>
@@ -40,7 +40,7 @@
               <el-input v-model="form.otpCode" autocomplete="one-time-code" />
               <span class="login-otp-hint">{{ $t("app.loginOtpHint") }}</span>
             </el-form-item>
-            <el-button type="primary" class="login-button" :loading="loading" @click="submit">
+            <el-button type="primary" class="btn-primary login-button" :loading="loading" @click="submit">
               {{ $t("app.signIn") }}
             </el-button>
           </el-form>
@@ -117,10 +117,10 @@ const submit = async () => {
 }
 
 .login-shell {
-  width: min(1100px, 92vw);
+  width: min(980px, 92vw);
   display: grid;
-  grid-template-columns: minmax(280px, 1.1fr) minmax(320px, 0.9fr);
-  gap: clamp(24px, 5vw, 72px);
+  grid-template-columns: minmax(280px, 1fr) minmax(320px, 0.9fr);
+  gap: clamp(24px, 4vw, 56px);
   align-items: center;
   position: relative;
   z-index: 1;
@@ -231,16 +231,16 @@ const submit = async () => {
 
 .login-panel {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .login-card {
-  width: min(420px, 92vw);
+  width: min(360px, 92vw);
   background: rgba(20, 28, 37, 0.92);
-  border: 1px solid var(--color-border-strong);
+  border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  padding: 32px;
+  box-shadow: var(--shadow-sm);
+  padding: 28px;
   position: relative;
   animation: login-card 620ms var(--motion-ease) both;
 }
@@ -255,7 +255,7 @@ const submit = async () => {
 }
 
 .login-card__header {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   display: grid;
   gap: 8px;
 }
@@ -279,32 +279,8 @@ const submit = async () => {
   font-size: var(--font-size-sm);
 }
 
-.login-form :deep(.el-form-item__label) {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  letter-spacing: 0.04em;
-}
-
 .login-form :deep(.el-form-item) {
-  margin-bottom: 18px;
-}
-
-.login-form :deep(.el-input__wrapper) {
-  background: rgba(15, 24, 36, 0.9);
-  border: 1px solid rgba(51, 74, 99, 0.7);
-  box-shadow: none;
-  transition: border-color var(--motion-fast) var(--motion-ease),
-    box-shadow var(--motion-fast) var(--motion-ease);
-}
-
-.login-form :deep(.el-input__wrapper.is-focus) {
-  border-color: rgba(61, 214, 255, 0.7);
-  box-shadow: 0 0 0 1px rgba(61, 214, 255, 0.35);
-}
-
-.login-form :deep(.el-input__inner) {
-  color: var(--color-text-primary);
-  font-family: var(--font-base);
+  margin-bottom: 16px;
 }
 
 .login-otp-hint {
@@ -316,22 +292,9 @@ const submit = async () => {
 
 .login-button {
   width: 100%;
-  margin-top: 12px;
-  height: 44px;
-  border-radius: var(--radius-pill);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  background: linear-gradient(120deg, #3dd6ff, #7cff6b);
-  border: none;
-  color: var(--color-text-inverse);
-  box-shadow: 0 10px 24px rgba(61, 214, 255, 0.22);
-  transition: transform var(--motion-fast) var(--motion-ease),
-    box-shadow var(--motion-fast) var(--motion-ease);
-}
-
-.login-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 16px 32px rgba(61, 214, 255, 0.28);
+  margin-top: var(--space-12);
+  height: var(--control-height-md);
+  border-radius: var(--radius-md);
 }
 
 .login-footer {
@@ -401,7 +364,7 @@ const submit = async () => {
 
 @media (max-width: 640px) {
   .login-card {
-    padding: 26px;
+    padding: 24px;
   }
 
   .login-graphic {

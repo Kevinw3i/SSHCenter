@@ -42,6 +42,15 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(:ok)
       expect(JSON.parse(response.body).dig("user", "open_mode")).to eq("web")
     end
+
+    it "returns not found when user does not exist" do
+      patch "/api/v1/users/0",
+        headers: auth_headers(admin),
+        params: { user: { open_mode: "web" } }
+
+      expect(response).to have_http_status(:not_found)
+      expect(JSON.parse(response.body)["error"]).to eq("not_found")
+    end
   end
 
   describe "GET /api/v1/users/:id/otp_qr" do

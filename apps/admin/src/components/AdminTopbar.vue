@@ -7,16 +7,28 @@
     </div>
     <div class="topbar__right">
       <span v-if="auth.user?.username" class="topbar__user">{{ auth.user.username }}</span>
-      <el-dropdown trigger="click" @command="setLocale">
+      <el-dropdown
+        trigger="click"
+        placement="bottom-end"
+        popper-class="admin-dropdown"
+        :popper-options="dropdownPopperOptions"
+        @command="setLocale"
+      >
         <el-button size="small" text class="topbar__lang">
           {{ localeLabel }}
           <span class="topbar__chevron">▾</span>
         </el-button>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item command="zh-TW">繁體中文</el-dropdown-item>
-            <el-dropdown-item command="zh-CN">简体中文</el-dropdown-item>
-            <el-dropdown-item command="en">English</el-dropdown-item>
+            <el-dropdown-item command="zh-TW" :class="{ 'is-active': locale === 'zh-TW' }">
+              繁體中文
+            </el-dropdown-item>
+            <el-dropdown-item command="zh-CN" :class="{ 'is-active': locale === 'zh-CN' }">
+              简体中文
+            </el-dropdown-item>
+            <el-dropdown-item command="en" :class="{ 'is-active': locale === 'en' }">
+              English
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -32,10 +44,11 @@ import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
+import { confirmAction } from "@/lib/confirm";
 
 const auth = useAuthStore();
 const router = useRouter();
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 
 const localeLabel = computed(() => {
   const labels = {
@@ -48,9 +61,23 @@ const localeLabel = computed(() => {
 
 const setLocale = (value) => {
   locale.value = value;
+  if (typeof window !== "undefined") {
+    localStorage.setItem("sscenter_locale", value);
+  }
+};
+
+const dropdownPopperOptions = {
+  strategy: "fixed",
+  modifiers: [
+    { name: "offset", options: { offset: [0, 8] } },
+    { name: "preventOverflow", options: { padding: 12 } },
+    { name: "flip", options: { padding: 12 } }
+  ]
 };
 
 const logout = async () => {
+  const confirmed = await confirmAction(t("common.confirmLogout"));
+  if (!confirmed) return;
   await auth.logout();
   router.push("/login");
 };
@@ -68,7 +95,7 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
   height: var(--admin-topbar-height);
-  padding: 0 var(--space-24);
+  padding: 0 var(--admin-page-padding-x);
   border-bottom: 1px solid var(--color-border-subtle);
   background: var(--color-surface-base);
 }

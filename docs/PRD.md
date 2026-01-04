@@ -22,15 +22,25 @@ SSCenter is a web-based SSH access hub with a user-facing console-style UI and a
 ## Scope
 ### Backend
 - Devise JWT authentication with OTP (TOTP).
+- JWT expiration: admin/manage 12 hours, user 1 hour.
 - Pundit authorization with role-based policies.
 - Entities: User, ServerGroup, Server, GroupMembership.
+- API returns JSON `not_found` errors for missing resources to keep clients consistent.
 
 ### Admin UI (apps/admin)
 - Login with username/password/OTP.
+- Login uses standardized form control tokens and a responsive card layout.
 - Enterprise layout: sidebar + topbar + content header.
+- Page layout template aligns header and card content to a shared grid; table padding standardized for consistency.
 - User management: list page + create/edit page, OTP QR modal.
-- Server management: create/edit servers, group servers under a named group.
-- Permission management: assign groups to users.
+- Server management: create/edit/delete servers; group binding handled in Group Settings.
+- Group settings: create/edit/delete groups and bind servers (deleting a group unassigns servers).
+- Permission management: assign and remove group access for users.
+- Shared Select/Dropdown component: `AdminSelect` wrapper with single/search/multi modes, defined states, and standardized dropdown panel spec.
+- 401 unauthorized responses clear the session and redirect to login (admin + web).
+- All data mutations require confirmation before submission.
+- Admin lists show counts, loading states, and empty states aligned to the shared table pattern.
+- Admin forms validate required fields and server IP format.
 
 ### Web UI (apps/web)
 - Login with username/password/OTP.
@@ -40,6 +50,7 @@ SSCenter is a web-based SSH access hub with a user-facing console-style UI and a
 - Server list: view servers by site/env/role, refresh list, select server(s).
 - Connection command format: role@IP.
 - Web mode: embedded terminal-like session with a return control.
+- Locale selection persists across admin + web sessions.
 
 ## Non-goals (initial release)
 - Self-service registration.

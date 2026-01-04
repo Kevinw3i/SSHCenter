@@ -26,20 +26,27 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { useAuthStore } from "@/stores/auth";
+import { confirmAction } from "@/lib/confirm";
 
 const auth = useAuthStore();
 const router = useRouter();
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 const now = ref(new Date());
 let timer;
 
 const formattedTime = computed(() =>
   now.value.toLocaleTimeString("en-US", { hour12: false })
 );
+
+watch(locale, (value) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("sscenter_locale", value);
+  }
+});
 
 onMounted(() => {
   timer = setInterval(() => {
@@ -52,6 +59,7 @@ onUnmounted(() => {
 });
 
 const logout = async () => {
+  if (!confirmAction(t("common.confirmLogout"))) return;
   await auth.logout();
   router.push("/login");
 };

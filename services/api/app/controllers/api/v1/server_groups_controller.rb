@@ -7,8 +7,8 @@ module Api
 
       def index
         authorize ServerGroup
-        groups = policy_scope(ServerGroup).order(:name)
-        render json: { server_groups: groups }
+        groups = policy_scope(ServerGroup).includes(:servers).order(:name)
+        render json: { server_groups: groups.map { |group| group_payload(group) } }
       end
 
       def create
@@ -16,7 +16,7 @@ module Api
         group = ServerGroup.new(server_group_params)
 
         if group.save
-          render json: { server_group: group }, status: :created
+          render json: { server_group: group_payload(group) }, status: :created
         else
           render json: { error: group.errors.full_messages }, status: :unprocessable_entity
         end
@@ -25,7 +25,7 @@ module Api
       def update
         authorize @server_group
         if @server_group.update(server_group_params)
-          render json: { server_group: @server_group }
+          render json: { server_group: group_payload(@server_group) }
         else
           render json: { error: @server_group.errors.full_messages }, status: :unprocessable_entity
         end
@@ -44,7 +44,16 @@ module Api
       end
 
       def server_group_params
-        params.require(:server_group).permit(:name)
+        params.require(:server_group).permit(:name, server_ids: [])
+      end
+
+      def group_payload(group)
+        {
+          id: group.id,
+          name: group.name,
+          server_ids: group.servers.map(&:id),
+          servers_count: group.servers.size
+        }
       end
     end
   end

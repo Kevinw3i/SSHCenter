@@ -3,7 +3,7 @@
 module Api
   module V1
     class ServersController < ApplicationController
-      before_action :set_server, only: [:update]
+      before_action :set_server, only: [:update, :destroy]
 
       def index
         authorize Server
@@ -35,6 +35,12 @@ module Api
         else
           render json: { error: @server.errors.full_messages }, status: :unprocessable_entity
         end
+      end
+
+      def destroy
+        authorize @server
+        @server.destroy
+        head :no_content
       end
 
       private

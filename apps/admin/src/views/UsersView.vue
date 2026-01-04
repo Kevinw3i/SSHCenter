@@ -15,7 +15,10 @@
           </span>
         </div>
       </div>
-      <el-table :data="users" row-key="id" class="data-table">
+      <el-table :data="users" row-key="id" class="data-table" v-loading="loading">
+        <template #empty>
+          <TableEmpty :description="$t('users.empty')" />
+        </template>
         <el-table-column prop="id" label="ID" width="80" align="center" header-align="center" />
         <el-table-column prop="username" :label="$t('app.username')" min-width="180" />
         <el-table-column prop="role" :label="$t('users.role')" width="140">
@@ -63,16 +66,25 @@ import { useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import api from "@/lib/api";
 import ContentHeader from "@/components/ContentHeader.vue";
+import TableEmpty from "@/components/TableEmpty.vue";
 
 const router = useRouter();
 const { t } = useI18n();
 const users = ref([]);
+const loading = ref(false);
 const otpVisible = ref(false);
 const otpSvg = ref("");
 
 const loadUsers = async () => {
-  const response = await api.get("/users");
-  users.value = response.data.users;
+  loading.value = true;
+  try {
+    const response = await api.get("/users");
+    users.value = response.data.users;
+  } catch (error) {
+    ElMessage.error(t("common.loadFailed"));
+  } finally {
+    loading.value = false;
+  }
 };
 
 const goCreate = () => {
@@ -99,13 +111,7 @@ const openOtp = async (user) => {
   }
 };
 
-onMounted(async () => {
-  try {
-    await loadUsers();
-  } catch (error) {
-    ElMessage.error(t("common.loadFailed"));
-  }
-});
+onMounted(loadUsers);
 </script>
 
 <style scoped>

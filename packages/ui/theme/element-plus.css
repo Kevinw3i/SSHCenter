@@ -16,12 +16,21 @@
   --el-bg-color: #141c25;
   --el-bg-color-page: #0b0f14;
   --el-bg-color-overlay: #182230;
+  --el-fill-color-blank: var(--color-surface-elevated);
+  --el-fill-color-light: var(--color-surface-panel);
+  --el-fill-color-lighter: rgba(28, 39, 53, 0.7);
 
   --el-text-color-primary: #e6f2ff;
   --el-text-color-regular: #9fb3c8;
   --el-text-color-secondary: #6b7c91;
+  --el-text-color-placeholder: var(--color-text-muted);
+  --el-input-icon-color: var(--color-text-muted);
   --el-border-color: #233141;
   --el-border-color-light: #1a2430;
+  --el-border-color-hover: var(--color-border-strong);
+  --el-disabled-text-color: var(--color-text-muted);
+  --el-disabled-bg-color: rgba(17, 24, 33, 0.6);
+  --el-disabled-border-color: var(--color-border-subtle);
 
   --el-border-radius-base: 8px;
   --el-border-radius-small: 4px;

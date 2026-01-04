@@ -25,16 +25,32 @@ const messages = {
     nav: {
       users: "Users",
       servers: "Servers",
+      groups: "Groups",
       permissions: "Permissions"
     },
     common: {
       back: "Back",
       cancel: "Cancel",
+      confirm: "Confirm",
+      confirmTitle: "Confirm action",
+      confirmMutation: "This action will update data. Continue?",
+      confirmDelete: "This will permanently delete the item. Continue?",
+      confirmLogout: "Log out and revoke the current session?",
       save: "Save",
+      edit: "Edit",
+      delete: "Delete",
       create: "Create",
       saved: "Saved",
       saveFailed: "Save failed",
-      loadFailed: "Failed to load data"
+      loadFailed: "Failed to load data",
+      loading: "Loading...",
+      noData: "No data",
+      noMatch: "No matches"
+    },
+    validation: {
+      required: "This field is required.",
+      passwordRequired: "Password is required.",
+      invalidIp: "Enter a valid IP address."
     },
     users: {
       title: "User Management",
@@ -53,6 +69,7 @@ const messages = {
       otpTitle: "OTP QR",
       otpSubtitle: "Scan with your authenticator app to enroll.",
       actions: "Actions",
+      empty: "No users yet.",
       notFound: "User not found.",
       edit: "Edit",
       otpQr: "OTP QR",
@@ -61,14 +78,16 @@ const messages = {
     },
     servers: {
       title: "Server Management",
-      subtitle: "Maintain inventory and group assignments.",
+      subtitle: "Maintain server inventory and access details.",
       listTitle: "Server Inventory",
       listSubtitle: "Grouped by site and environment.",
+      countLabel: "{count} servers",
       create: "Create Server",
       createTitle: "Create Server",
       edit: "Edit",
       editTitle: "Edit Server",
       actions: "Actions",
+      empty: "No servers yet.",
       groupPlaceholder: "New group name",
       groupCreate: "Create Group",
       groupSelect: "Select group",
@@ -78,14 +97,33 @@ const messages = {
       role: "Role",
       ip: "IP"
     },
+    groups: {
+      title: "Group Settings",
+      subtitle: "Create groups and bind servers.",
+      listTitle: "Server Groups",
+      listSubtitle: "Manage assignments and access scopes.",
+      countLabel: "{count} groups",
+      create: "Create Group",
+      createTitle: "Create Group",
+      editTitle: "Edit Group",
+      name: "Group name",
+      servers: "Bound servers",
+      serversPlaceholder: "Select servers",
+      actions: "Actions",
+      empty: "No groups yet.",
+      confirmDelete: "Deleting a group will unassign its servers. Continue?"
+    },
     permissions: {
       title: "Permission Management",
       subtitle: "Assign server groups to users.",
       listTitle: "Group Assignments",
       listSubtitle: "Users with access to server groups.",
+      countLabel: "{count} assignments",
       selectUser: "Select user",
       selectGroup: "Select group",
-      assign: "Assign Group"
+      assign: "Assign Group",
+      empty: "No group assignments yet.",
+      confirmRemove: "Remove this user from the group?"
     }
   },
   "zh-TW": {
@@ -112,16 +150,32 @@ const messages = {
     nav: {
       users: "使用者",
       servers: "伺服器",
+      groups: "群組設定",
       permissions: "權限"
     },
     common: {
       back: "返回",
       cancel: "取消",
+      confirm: "確認",
+      confirmTitle: "確認操作",
+      confirmMutation: "此操作將更新資料，是否繼續？",
+      confirmDelete: "此操作將永久刪除項目，是否繼續？",
+      confirmLogout: "是否登出並撤銷目前登入？",
       save: "儲存",
+      edit: "編輯",
+      delete: "刪除",
       create: "新增",
       saved: "已儲存",
       saveFailed: "儲存失敗",
-      loadFailed: "載入失敗"
+      loadFailed: "載入失敗",
+      loading: "載入中...",
+      noData: "沒有資料",
+      noMatch: "沒有符合項目"
+    },
+    validation: {
+      required: "此欄位必填。",
+      passwordRequired: "請輸入密碼。",
+      invalidIp: "請輸入正確的 IP 位址。"
     },
     users: {
       title: "使用者管理",
@@ -140,6 +194,7 @@ const messages = {
       otpTitle: "OTP QR",
       otpSubtitle: "請使用驗證器掃描綁定。",
       actions: "操作",
+      empty: "目前沒有使用者。",
       notFound: "找不到使用者。",
       edit: "編輯",
       otpQr: "OTP QR",
@@ -148,14 +203,16 @@ const messages = {
     },
     servers: {
       title: "伺服器管理",
-      subtitle: "維護伺服器與群組設定。",
+      subtitle: "維護伺服器清單與存取資訊。",
       listTitle: "伺服器清單",
       listSubtitle: "依站點與環境分類。",
+      countLabel: "{count} 台伺服器",
       create: "新增伺服器",
       createTitle: "新增伺服器",
       edit: "編輯",
       editTitle: "編輯伺服器",
       actions: "操作",
+      empty: "目前沒有伺服器。",
       groupPlaceholder: "新增群組名稱",
       groupCreate: "建立群組",
       groupSelect: "選擇群組",
@@ -165,14 +222,33 @@ const messages = {
       role: "角色",
       ip: "IP"
     },
+    groups: {
+      title: "群組設定",
+      subtitle: "建立群組並綁定伺服器。",
+      listTitle: "伺服器群組",
+      listSubtitle: "管理群組與可存取範圍。",
+      countLabel: "{count} 個群組",
+      create: "建立群組",
+      createTitle: "建立群組",
+      editTitle: "編輯群組",
+      name: "群組名稱",
+      servers: "綁定伺服器",
+      serversPlaceholder: "選擇伺服器",
+      actions: "操作",
+      empty: "目前沒有群組。",
+      confirmDelete: "刪除群組會解除伺服器綁定，是否繼續？"
+    },
     permissions: {
       title: "權限管理",
       subtitle: "指派群組權限給使用者。",
       listTitle: "群組指派",
       listSubtitle: "目前的使用者與群組對應。",
+      countLabel: "{count} 筆指派",
       selectUser: "選擇使用者",
       selectGroup: "選擇群組",
-      assign: "指派群組"
+      assign: "指派群組",
+      empty: "目前沒有群組指派。",
+      confirmRemove: "是否移除該使用者的群組權限？"
     }
   },
   "zh-CN": {
@@ -199,16 +275,32 @@ const messages = {
     nav: {
       users: "用户",
       servers: "服务器",
+      groups: "分组设置",
       permissions: "权限"
     },
     common: {
       back: "返回",
       cancel: "取消",
+      confirm: "确认",
+      confirmTitle: "确认操作",
+      confirmMutation: "此操作将更新数据，是否继续？",
+      confirmDelete: "此操作将永久删除项目，是否继续？",
+      confirmLogout: "是否退出并撤销当前登录？",
       save: "保存",
+      edit: "编辑",
+      delete: "删除",
       create: "新建",
       saved: "已保存",
       saveFailed: "保存失败",
-      loadFailed: "加载失败"
+      loadFailed: "加载失败",
+      loading: "加载中...",
+      noData: "暂无数据",
+      noMatch: "没有匹配项"
+    },
+    validation: {
+      required: "此字段必填。",
+      passwordRequired: "请输入密码。",
+      invalidIp: "请输入正确的 IP 地址。"
     },
     users: {
       title: "用户管理",
@@ -227,6 +319,7 @@ const messages = {
       otpTitle: "OTP QR",
       otpSubtitle: "请使用验证器扫描绑定。",
       actions: "操作",
+      empty: "当前没有用户。",
       notFound: "未找到用户。",
       edit: "编辑",
       otpQr: "OTP QR",
@@ -235,14 +328,16 @@ const messages = {
     },
     servers: {
       title: "服务器管理",
-      subtitle: "维护服务器与分组配置。",
+      subtitle: "维护服务器清单与访问信息。",
       listTitle: "服务器列表",
       listSubtitle: "按站点与环境分类。",
+      countLabel: "{count} 台服务器",
       create: "新建服务器",
       createTitle: "新建服务器",
       edit: "编辑",
       editTitle: "编辑服务器",
       actions: "操作",
+      empty: "当前没有服务器。",
       groupPlaceholder: "新建分组名称",
       groupCreate: "创建分组",
       groupSelect: "选择分组",
@@ -252,21 +347,45 @@ const messages = {
       role: "角色",
       ip: "IP"
     },
+    groups: {
+      title: "分组设置",
+      subtitle: "创建分组并绑定服务器。",
+      listTitle: "服务器分组",
+      listSubtitle: "管理分组与可访问范围。",
+      countLabel: "{count} 个分组",
+      create: "创建分组",
+      createTitle: "创建分组",
+      editTitle: "编辑分组",
+      name: "分组名称",
+      servers: "绑定服务器",
+      serversPlaceholder: "选择服务器",
+      actions: "操作",
+      empty: "当前没有分组。",
+      confirmDelete: "删除分组会解除服务器绑定，是否继续？"
+    },
     permissions: {
       title: "权限管理",
       subtitle: "为用户分配分组权限。",
       listTitle: "分组分配",
       listSubtitle: "当前用户与分组对应关系。",
+      countLabel: "{count} 条分配",
       selectUser: "选择用户",
       selectGroup: "选择分组",
-      assign: "分配分组"
+      assign: "分配分组",
+      empty: "当前没有分组分配。",
+      confirmRemove: "是否移除该用户的分组权限？"
     }
   }
 };
 
+const getInitialLocale = () => {
+  if (typeof window === "undefined") return "zh-TW";
+  return localStorage.getItem("sscenter_locale") || "zh-TW";
+};
+
 const i18n = createI18n({
   legacy: false,
-  locale: "zh-TW",
+  locale: getInitialLocale(),
   fallbackLocale: "en",
   messages
 });

@@ -33,6 +33,6 @@ const auth = useAuthStore();
 
 .app-content {
   flex: 1;
-  padding: var(--space-24) var(--space-32) var(--space-32);
+  padding: var(--admin-page-padding-top) var(--admin-page-padding-x) var(--admin-page-padding-bottom);
 }
 </style>

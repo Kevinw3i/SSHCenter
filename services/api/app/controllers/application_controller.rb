@@ -5,6 +5,7 @@ class ApplicationController < ActionController::API
   before_action :authenticate_user!
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   private
 
@@ -21,5 +22,9 @@ class ApplicationController < ActionController::API
 
   def user_not_authorized
     render json: { error: "not_authorized" }, status: :forbidden
+  end
+
+  def record_not_found
+    render json: { error: "not_found" }, status: :not_found
   end
 end
