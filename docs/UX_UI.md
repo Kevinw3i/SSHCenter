@@ -77,8 +77,9 @@ Source of truth: packages/ui/tokens.json
 - Row height: 48px (16px vertical padding), subtle hover highlight.
 - Actions column right-aligned; text buttons only.
 - Subtitle can include item count (e.g. "Grouped by site · 12 servers").
-- Empty state uses `el-empty` with concise copy and optional action button.
+- Empty state uses `el-empty` with concise copy and optional action CTA (create primary).
 - Loading uses the table overlay spinner while data is fetching.
+- Permission filters show a muted note when a duplicate assignment is selected; assign button stays disabled.
 
 ### Form Controls
 - Tokens: `--control-height-md` (36px), `--control-height-sm` (28px), `--control-padding-x` (12px), `--control-padding-y` (6px).
@@ -86,6 +87,7 @@ Source of truth: packages/ui/tokens.json
 - States: default (surface-elevated + border-subtle), hover (border-strong), focus (accent-cyan + 1px ring), filled (text-primary), disabled (dim background + muted text), error (danger border + 1px ring), loading (spinner aligned in suffix; field dims).
 - Button: height 36px, radius-md, primary uses brand cyan, secondary outline; loading dims and keeps height.
 - Validation: required fields show inline error text; server IP validates IPv4 format on blur.
+- Error surface: show first API validation error inline via toast to confirm why save failed.
 
 ### Select / Dropdown Spec
 - Component: `AdminSelect` (Element Plus wrapper) for single, searchable, and multi-select across admin pages.

@@ -6,6 +6,7 @@
 - Admin can edit servers from the list.
 - Admin can delete servers and manage group bindings.
 - Admin list pages show count, loading overlay, and empty states as expected.
+- Admin empty states include the correct create CTA.
 - Admin layout uses compact topbar and aligned table actions.
 - Admin page header and table content align to the shared grid with consistent table padding.
 - Admin language dropdown aligns to the trigger, has no bullets, and does not overlap actions.
@@ -23,6 +24,7 @@
 - Web terminal view returns safely to list.
 - Server IP validation blocks invalid entries on admin create/edit.
 - Permissions assignments can be removed from the admin list.
+- Duplicate permission assignments are blocked and signaled to the user.
 
 ## Development Notes
 - Local API base URL: http://localhost:3001/api/v1

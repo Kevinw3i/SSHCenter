@@ -11,6 +11,7 @@ Notes:
 - Admin login form uses shared control tokens for sizing and states; no API changes.
 - Missing resources return `{"error":"not_found"}` with 404.
 - Validation errors return `{"error":[...messages]}` with 422.
+- Clients display the first validation error message for inline feedback.
 
 ## Auth
 ### POST /api/v1/auth/login

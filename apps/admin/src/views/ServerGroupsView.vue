@@ -19,7 +19,13 @@
       </div>
       <el-table :data="groups" row-key="id" class="data-table" v-loading="loading">
         <template #empty>
-          <TableEmpty :description="$t('groups.empty')" />
+          <TableEmpty :description="$t('groups.empty')">
+            <template #action>
+              <el-button type="primary" class="btn-primary" @click="openCreate">
+                {{ $t("groups.create") }}
+              </el-button>
+            </template>
+          </TableEmpty>
         </template>
         <el-table-column prop="name" :label="$t('groups.name')" min-width="220" />
         <el-table-column :label="$t('groups.servers')" width="160">
@@ -88,6 +94,7 @@ import ContentHeader from "@/components/ContentHeader.vue";
 import AdminSelect from "@/components/AdminSelect.vue";
 import { confirmAction } from "@/lib/confirm";
 import TableEmpty from "@/components/TableEmpty.vue";
+import { resolveApiError } from "@/lib/errors";
 
 const groups = ref([]);
 const servers = ref([]);
@@ -176,7 +183,7 @@ const save = async () => {
     await Promise.all([loadGroups(), loadServers()]);
     ElMessage.success(t("common.saved"));
   } catch (error) {
-    ElMessage.error(t("common.saveFailed"));
+    ElMessage.error(resolveApiError(error, t("common.saveFailed")));
   } finally {
     saving.value = false;
   }
@@ -190,7 +197,7 @@ const removeGroup = async (group) => {
     await Promise.all([loadGroups(), loadServers()]);
     ElMessage.success(t("common.saved"));
   } catch (error) {
-    ElMessage.error(t("common.saveFailed"));
+    ElMessage.error(resolveApiError(error, t("common.saveFailed")));
   }
 };
 

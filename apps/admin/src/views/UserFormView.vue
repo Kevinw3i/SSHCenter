@@ -60,6 +60,7 @@ import api from "@/lib/api";
 import ContentHeader from "@/components/ContentHeader.vue";
 import AdminSelect from "@/components/AdminSelect.vue";
 import { confirmAction } from "@/lib/confirm";
+import { resolveApiError } from "@/lib/errors";
 
 const route = useRoute();
 const router = useRouter();
@@ -150,7 +151,7 @@ const save = async () => {
 
     router.push("/users");
   } catch (error) {
-    ElMessage.error(t("common.saveFailed"));
+    ElMessage.error(resolveApiError(error, t("common.saveFailed")));
   } finally {
     loading.value = false;
   }

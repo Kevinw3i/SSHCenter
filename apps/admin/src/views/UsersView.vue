@@ -17,7 +17,13 @@
       </div>
       <el-table :data="users" row-key="id" class="data-table" v-loading="loading">
         <template #empty>
-          <TableEmpty :description="$t('users.empty')" />
+          <TableEmpty :description="$t('users.empty')">
+            <template #action>
+              <el-button type="primary" class="btn-primary" @click="goCreate">
+                {{ $t("users.create") }}
+              </el-button>
+            </template>
+          </TableEmpty>
         </template>
         <el-table-column prop="id" label="ID" width="80" align="center" header-align="center" />
         <el-table-column prop="username" :label="$t('app.username')" min-width="180" />

@@ -41,6 +41,7 @@ SSCenter is a web-based SSH access hub with a user-facing console-style UI and a
 - All data mutations require confirmation before submission.
 - Admin lists show counts, loading states, and empty states aligned to the shared table pattern.
 - Admin forms validate required fields and server IP format.
+- Admin permission assignments prevent duplicates and surface validation errors in-line.
 
 ### Web UI (apps/web)
 - Login with username/password/OTP.

@@ -123,7 +123,8 @@ const messages = {
       selectGroup: "Select group",
       assign: "Assign Group",
       empty: "No group assignments yet.",
-      confirmRemove: "Remove this user from the group?"
+      confirmRemove: "Remove this user from the group?",
+      alreadyAssigned: "This user already has the selected group."
     }
   },
   "zh-TW": {
@@ -248,7 +249,8 @@ const messages = {
       selectGroup: "選擇群組",
       assign: "指派群組",
       empty: "目前沒有群組指派。",
-      confirmRemove: "是否移除該使用者的群組權限？"
+      confirmRemove: "是否移除該使用者的群組權限？",
+      alreadyAssigned: "此使用者已具備該群組權限。"
     }
   },
   "zh-CN": {
@@ -373,7 +375,8 @@ const messages = {
       selectGroup: "选择分组",
       assign: "分配分组",
       empty: "当前没有分组分配。",
-      confirmRemove: "是否移除该用户的分组权限？"
+      confirmRemove: "是否移除该用户的分组权限？",
+      alreadyAssigned: "该用户已拥有该分组权限。"
     }
   }
 };

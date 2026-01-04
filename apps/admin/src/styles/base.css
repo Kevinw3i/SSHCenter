@@ -136,6 +136,13 @@ a {
   background: rgba(20, 28, 37, 0.6);
 }
 
+.table-filters__note {
+  margin: 0;
+  padding: 0 var(--admin-card-padding-x) var(--space-12);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
 .table-filters .el-input,
 .table-filters .el-select {
   min-width: 180px;

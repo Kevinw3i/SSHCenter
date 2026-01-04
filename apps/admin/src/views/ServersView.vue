@@ -19,7 +19,13 @@
       </div>
       <el-table :data="servers" row-key="id" class="data-table" v-loading="loading">
         <template #empty>
-          <TableEmpty :description="$t('servers.empty')" />
+          <TableEmpty :description="$t('servers.empty')">
+            <template #action>
+              <el-button type="primary" class="btn-primary" @click="openCreate">
+                {{ $t("servers.create") }}
+              </el-button>
+            </template>
+          </TableEmpty>
         </template>
         <el-table-column prop="site" :label="$t('servers.site')" min-width="140" />
         <el-table-column prop="env" :label="$t('servers.env')" min-width="120" />
@@ -81,6 +87,7 @@ import api from "@/lib/api";
 import ContentHeader from "@/components/ContentHeader.vue";
 import { confirmAction } from "@/lib/confirm";
 import TableEmpty from "@/components/TableEmpty.vue";
+import { resolveApiError } from "@/lib/errors";
 
 const servers = ref([]);
 const dialogVisible = ref(false);
@@ -174,7 +181,7 @@ const save = async () => {
     await loadServers();
     ElMessage.success(t("common.saved"));
   } catch (error) {
-    ElMessage.error(t("common.saveFailed"));
+    ElMessage.error(resolveApiError(error, t("common.saveFailed")));
   } finally {
     saving.value = false;
   }
@@ -188,7 +195,7 @@ const removeServer = async (server) => {
     await loadServers();
     ElMessage.success(t("common.saved"));
   } catch (error) {
-    ElMessage.error(t("common.saveFailed"));
+    ElMessage.error(resolveApiError(error, t("common.saveFailed")));
   }
 };
 

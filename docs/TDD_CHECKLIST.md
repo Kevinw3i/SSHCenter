@@ -47,4 +47,7 @@
 - Admin 401 responses clear session and redirect to login.
 - Admin login form uses shared control tokens for input/button sizing and state styling.
 - All admin/web data mutations require confirmation before submission.
+- Admin list empty states include create CTAs and show loading overlays.
+- Admin permissions block duplicate assignments with a helper note.
+- Admin forms surface the first API validation error in the failure toast.
 - Admin page layout template aligns content header and table cells to the shared 24px inset grid.

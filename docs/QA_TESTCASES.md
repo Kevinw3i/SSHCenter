@@ -19,7 +19,8 @@
 4. Click "Create User" -> navigates to create page and save returns to list.
 5. Click "Edit" on a row -> navigates to edit page and save returns to list.
 6. Empty state appears when no users exist.
-7. List shows loading overlay during fetch.
+7. Empty state CTA uses "Create User".
+8. List shows loading overlay during fetch.
 
 ## Admin - Servers
 1. Create server with site/env/role/ip -> appears in list.
@@ -28,12 +29,15 @@
 4. Delete server -> removed from list after confirmation.
 5. Invalid IP shows validation error and blocks save.
 6. List shows count and loading overlay; empty state appears when none exist.
+7. Empty state CTA uses "Create Server".
+8. API validation errors surface the first message in the toast.
 
 ## Admin - Groups
 1. Create group -> appears in list.
 2. Edit group name and bound servers -> updates counts.
 3. Delete group -> group removed and servers unassigned after confirmation.
 4. Empty state appears when no groups exist.
+5. Empty state CTA uses "Create Group".
 
 ## Admin - Permissions
 1. Assign group to user -> user can see group servers.
@@ -41,6 +45,7 @@
 3. Remove assignment from list -> membership deleted after confirmation.
 4. Assign button disabled until user + group are selected.
 5. Empty state appears when no assignments exist.
+6. Selecting a duplicate user+group shows the duplicate note and disables the assign button.
 
 ## Admin - Select/Dropdown
 1. Default/hover/focus/filled/disabled/error states match spec and are visually distinct.

@@ -39,6 +39,7 @@
           {{ $t("permissions.assign") }}
         </el-button>
       </div>
+      <p v-if="assignmentExists" class="table-filters__note">{{ $t("permissions.alreadyAssigned") }}</p>
 
       <el-table :data="memberships" row-key="id" class="data-table" v-loading="loadingMemberships">
         <template #empty>
@@ -69,6 +70,7 @@ import ContentHeader from "@/components/ContentHeader.vue";
 import AdminSelect from "@/components/AdminSelect.vue";
 import { confirmAction } from "@/lib/confirm";
 import TableEmpty from "@/components/TableEmpty.vue";
+import { resolveApiError } from "@/lib/errors";
 
 const users = ref([]);
 const groups = ref([]);
@@ -81,8 +83,24 @@ const loadingMemberships = ref(false);
 const assigning = ref(false);
 const { t } = useI18n();
 
+const assignmentExists = computed(
+  () =>
+    Boolean(selectedUser.value) &&
+    Boolean(selectedGroup.value) &&
+    memberships.value.some(
+      (membership) =>
+        membership.user?.id === selectedUser.value && membership.server_group?.id === selectedGroup.value
+    )
+);
+
 const assignDisabled = computed(
-  () => assigning.value || loadingUsers.value || loadingGroups.value || !selectedUser.value || !selectedGroup.value
+  () =>
+    assigning.value ||
+    loadingUsers.value ||
+    loadingGroups.value ||
+    !selectedUser.value ||
+    !selectedGroup.value ||
+    assignmentExists.value
 );
 
 const loadUsers = async () => {
@@ -131,7 +149,7 @@ const assign = async () => {
     selectedGroup.value = null;
     await loadMemberships();
   } catch (error) {
-    ElMessage.error(t("common.saveFailed"));
+    ElMessage.error(resolveApiError(error, t("common.saveFailed")));
   } finally {
     assigning.value = false;
   }
@@ -145,7 +163,7 @@ const remove = async (membership) => {
     await loadMemberships();
     ElMessage.success(t("common.saved"));
   } catch (error) {
-    ElMessage.error(t("common.saveFailed"));
+    ElMessage.error(resolveApiError(error, t("common.saveFailed")));
   }
 };
 
