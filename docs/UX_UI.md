@@ -84,6 +84,7 @@ Source of truth: packages/ui/tokens.json
 ### Form Controls
 - Tokens: `--control-height-md` (36px), `--control-height-sm` (28px), `--control-padding-x` (12px), `--control-padding-y` (6px).
 - Input/OTP: height 36px, padding 6px 12px, radius-md, background surface-elevated, border-subtle, clear/suffix icon centered.
+- Input inner field: borderless/transparent, full-width to match the container; focus styling stays on the wrapper.
 - States: default (surface-elevated + border-subtle), hover (border-strong), focus (accent-cyan + 1px ring), filled (text-primary), disabled (dim background + muted text), error (danger border + 1px ring), loading (spinner aligned in suffix; field dims).
 - Button: height 36px, radius-md, primary uses brand cyan, secondary outline; loading dims and keeps height.
 - Validation: required fields show inline error text; server IP validates IPv4 format on blur.
